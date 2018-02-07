@@ -11,6 +11,7 @@ public class Server {
 
 	interface ServerListener {
 		void onMessage(String name, String m);
+
 	}
 
 	static ServerSocket serverSocket;
@@ -25,9 +26,9 @@ public class Server {
 		serverSocket = new ServerSocket(Port.port);
 		System.out.println("Server started...");
 
-		// TO DO cu while (true), la 5 continue + mesaj de eroare
+		users.add(new User("Dealer", 1000000));
 
-		Thread logging = new Thread (new Runnable () {
+		Thread logging = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
@@ -70,6 +71,7 @@ public class Server {
 								System.out.println("in listener in for in if after try");
 							}
 						}
+
 					});
 
 					if (users.size() < 5) {
@@ -86,21 +88,32 @@ public class Server {
 
 				}
 			}
-			
-			
+
 		});
-		
+
 		logging.start();
-		
-		
-		blackJack();
-		
+
+		BlackJackTheBrain blackJack;
+
+		while (true) {
+			if (users.size() > 1) {
+				blackJack = new BlackJackTheBrain(users);
+				System.out.println("am inceput un nou joc");
+				break;
+			}
+			
+		blackJack = new BlackJackTheBrain();
+
+		while (true) {
+
+			if ((users.size() > 1) && blackJack.ended) {
+				blackJack = new BlackJackTheBrain(users);
+				System.out.println("am inceput un nou joc");
+			}
+
+		}
 
 	}
 
-	private static void blackJack() {
-		// TODO Auto-generated method stub
-		
-	}
-
+}
 }

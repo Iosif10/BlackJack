@@ -9,7 +9,7 @@ public class Application {
 
 	public Client client = new Client();
 
-	ComunicationCenter comunications;
+	CommunicationCenter comunications;
 
 	ApplicationWindow aW;
 
@@ -21,7 +21,7 @@ public class Application {
 				aW = new ApplicationWindow(client);
 				aW.frmBlackjackMultiplayer.setVisible(true);
 				try {
-					comunications = new ComunicationCenter(client, aW);
+					comunications = new CommunicationCenter(client, aW);
 				} catch (UnknownHostException e) {
 					
 					e.printStackTrace();

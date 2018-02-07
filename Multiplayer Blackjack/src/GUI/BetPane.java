@@ -21,11 +21,12 @@ public class BetPane extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JButton bet;
-	private JButton cancelButton;
+	private JButton skip;
 	private JComboBox<Integer> comboBox;
 	public Client client;
 
 	ButtonListener listener;
+	ButtonListener skipListener;
 
 	/**
 	 * Launch the application.
@@ -88,17 +89,22 @@ public class BetPane extends JDialog {
 			});
 
 			{
-				cancelButton = new JButton("Skip this round");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
+				skip = new JButton("Skip this round");
+				skip.setActionCommand("Cancel");
+				buttonPane.add(skip);
 			}
 
-			cancelButton.addActionListener(new ActionListener() {
+			skip.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 
-					// listener.onclick();
+					if (listener != null) {
+						client.playing = false;
+						client.bet = 0;
+						System.out.println(client.playing);
+						skipListener.onClick();
+					}
 
 				}
 
@@ -109,6 +115,11 @@ public class BetPane extends JDialog {
 	public void setListener(ButtonListener listener) {
 		
 		this.listener = listener;
+	}
+
+	public void setSkipListener(ButtonListener skipListener) {
+		
+		this.skipListener = skipListener;
 	}
 
 }

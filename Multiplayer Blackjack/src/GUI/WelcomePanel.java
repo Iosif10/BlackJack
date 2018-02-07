@@ -19,6 +19,7 @@ import javax.swing.text.NumberFormatter;
 
 import GUI.ApplicationWindow.ButtonListener;
 import java.awt.Rectangle;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class WelcomePanel extends JPanel {
 	
@@ -42,10 +43,10 @@ public class WelcomePanel extends JPanel {
 	 */
 	private void initialize() {
 		
-		setBounds(0, 0, 915, 659);
+		setBounds(0, 0, 915, 685);
 
 		welcomePanel = new WelcomeDrawingComponent();
-		welcomePanel.setBounds(new Rectangle(0, 0, 915, 659));
+		welcomePanel.setBounds(new Rectangle(0, 0, 915, 685));
 		welcomePanel.setBackground(Color.BLUE);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
@@ -59,7 +60,7 @@ public class WelcomePanel extends JPanel {
 		
 		JLabel lblWelcome = new JLabel("WELCOME!");
 		lblWelcome.setForeground(Color.YELLOW);
-		lblWelcome.setFont(new Font("Vrinda", Font.PLAIN, 58));
+		lblWelcome.setFont(new Font("Vrinda", Font.PLAIN, 90));
 		
 		Nickname = new JTextField();
 		Nickname.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -78,11 +79,11 @@ public class WelcomePanel extends JPanel {
 		
 		JLabel lblNickname = new JLabel("Nickname :");
 		lblNickname.setForeground(Color.YELLOW);
-		lblNickname.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
+		lblNickname.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
 		
 		JLabel lblCashusd = new JLabel("Cash (USD) :");
 		lblCashusd.setForeground(Color.YELLOW);
-		lblCashusd.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
+		lblCashusd.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
 		
 		Enter = new JButton(new ImageIcon("C:\\Users\\user\\eclipse-workspace\\Multiplayer Blackjack\\src\\Resources\\Enter.png"));
 		Enter.addActionListener(new ActionListener() {
@@ -108,54 +109,57 @@ public class WelcomePanel extends JPanel {
 		});
 		
 		JLabel lblWelcomeToOur = new JLabel("Welcome to our BlackJack Online Casino! Fill the two fields and than press the red button below. Enjoy the game!");
-		lblWelcomeToOur.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblWelcomeToOur.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblWelcomeToOur.setForeground(Color.YELLOW);
 		GroupLayout gl_panel = new GroupLayout(welcomePanel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
-					.addGap(44)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap(55, Short.MAX_VALUE)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblWelcomeToOur)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblCashusd, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblNickname, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE))
-							.addGap(26)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(Nickname, GroupLayout.PREFERRED_SIZE, 274, GroupLayout.PREFERRED_SIZE)
-								.addComponent(Cash, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap(252, Short.MAX_VALUE))
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(268)
-					.addComponent(lblWelcome, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGap(231))
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap(359, Short.MAX_VALUE)
-					.addComponent(Enter, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
-					.addGap(333))
+							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+								.addGroup(Alignment.LEADING, gl_panel.createParallelGroup(Alignment.LEADING)
+									.addGroup(gl_panel.createSequentialGroup()
+										.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+											.addComponent(lblNickname, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
+											.addComponent(lblCashusd, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE))
+										.addGap(54)
+										.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+											.addComponent(Nickname, GroupLayout.PREFERRED_SIZE, 246, GroupLayout.PREFERRED_SIZE)
+											.addComponent(Cash, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)))
+									.addComponent(lblWelcomeToOur))
+								.addGroup(gl_panel.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED, 209, GroupLayout.PREFERRED_SIZE)
+									.addComponent(lblWelcome, GroupLayout.PREFERRED_SIZE, 534, GroupLayout.PREFERRED_SIZE)
+									.addGap(96)))
+							.addGap(21))
+						.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+							.addComponent(Enter, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
+							.addGap(382))))
 		);
 		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(50)
-					.addComponent(lblWelcome, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addGap(35)
+					.addGap(123)
+					.addComponent(lblWelcome, GroupLayout.PREFERRED_SIZE, 167, GroupLayout.PREFERRED_SIZE)
+					.addGap(37)
 					.addComponent(lblWelcomeToOur)
-					.addGap(27)
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+					.addGap(32)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
+							.addGap(10)
 							.addComponent(lblNickname)
-							.addGap(17))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addComponent(Nickname, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)))
-					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblCashusd, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
-						.addComponent(Cash, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(29)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(lblCashusd, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(Nickname)
+							.addGap(18)
+							.addComponent(Cash, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addGap(83)
 					.addComponent(Enter)
-					.addGap(54))
+					.addGap(73))
 		);
 		welcomePanel.setLayout(gl_panel);
 		setLayout(groupLayout);

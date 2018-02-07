@@ -4,15 +4,21 @@ import javax.swing.ImageIcon;
 
 public class Card {
 	
-	int value;
-	String color;
-	ImageIcon image;
-	
-	public Card (int value, String color, ImageIcon image) {
+	public int value;
+	public String color;
+		
+	public Card (int value, String color) {
 		
 		this.value = value;
 		this.color = color;
-		this.image = image;
+		
 	}
+
+	@Override
+	public String toString() {
+		return value + "#" + color + "#";
+	}
+	
+	
 
 }
