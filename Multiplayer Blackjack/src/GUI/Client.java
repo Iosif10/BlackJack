@@ -21,6 +21,8 @@ public class Client implements Serializable{
 	boolean playing;
 	boolean bePatientflag;
 	Dealer dealer;
+	ArrayList <Client> players;
+	int points;
 	
 	public Client (String Name, int money) {
 		
@@ -29,12 +31,26 @@ public class Client implements Serializable{
 		cards = new ArrayList <Card> ();
 		this.playing = true;
 		dealer = new Dealer();
+		players = new ArrayList <Client> ();
+		
+	}
+	
+public Client (String Name, int money, int bet) {
+		
+		this.name = Name;
+		this.money = money;
+		this.bet = bet;
+		cards = new ArrayList <Card> ();
+		this.playing = true;
+		dealer = new Dealer();
+		players = new ArrayList <Client> ();
 		
 	}
 	
 	public Client () {
 		cards = new ArrayList <Card> ();
 		dealer = new Dealer();
+		players = new ArrayList <Client> ();
 	}
 
 	@Override

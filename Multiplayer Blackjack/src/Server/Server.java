@@ -19,6 +19,7 @@ public class Server {
 	static DataOutputStream out;
 	static ArrayList<User> users = new ArrayList<User>();
 	static DataInputStream in;
+	static ArrayList<User> newUsers = new ArrayList<User>();
 
 	public static void main(String[] args) throws Exception {
 
@@ -74,11 +75,17 @@ public class Server {
 
 					});
 
-					if (users.size() < 5) {
+					if (users.size() == 1) {
 						users.add(user);
-					} else {
-						System.out.println("Ne pare rau, masa este deja ocupata. Va rugam sa mai asteptati.");
-						continue;
+					} else { 
+						if ((users.size() >= 2) && ((users.size() + newUsers.size()) < 6)) {
+							newUsers.add(user);
+						} else {
+							if ((users.size() + newUsers.size()) > 5) {
+								System.out.println("Ne pare rau, masa este deja ocupata. Va rugam sa mai asteptati.");
+								continue;
+							}
+						}
 					}
 
 					Thread thread = new Thread(user);
@@ -96,24 +103,27 @@ public class Server {
 		BlackJackTheBrain blackJack;
 
 		while (true) {
-			if (users.size() > 1) {
+			if ((users.size() > 1) && (users.get(1).name != null)) {
+				System.out.println("am incepuuuuuuuuuuuuuuuuut joc nou");
 				blackJack = new BlackJackTheBrain(users);
-				System.out.println("am inceput un nou joc");
+				users.addAll(newUsers);
+				newUsers.clear();
 				break;
 			}
-			
+		}
+
 		blackJack = new BlackJackTheBrain();
 
 		while (true) {
 
 			if ((users.size() > 1) && blackJack.ended) {
 				blackJack = new BlackJackTheBrain(users);
-				System.out.println("am inceput un nou joc");
+				users.addAll(newUsers);
+				newUsers.clear();
 			}
 
 		}
 
 	}
 
-}
 }

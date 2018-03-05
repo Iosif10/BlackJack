@@ -60,13 +60,15 @@ public class ApplicationWindow {
 
 		welcomePanel = new WelcomePanel(client, enterListener);
 		frmBlackjackMultiplayer.add(welcomePanel);
+		
+		tablePanel = new TablePanel(client);
 
 	}
 
 	public void playingTable() {
 
 		welcomePanel.setVisible(false);
-		tablePanel = new TablePanel(client);
+		
 		frmBlackjackMultiplayer.add(tablePanel);
 
 		betPane = new BetPane(client);
@@ -88,6 +90,15 @@ public class ApplicationWindow {
 		tablePanel.setDbleListener(dbleListener);
 		tablePanel.setSplitListener(splitListener);
 		
+		
+	}
+	
+	public void newTable() {
+		
+		client.cards.clear();
+		client.dealer.cards.clear();
+		tablePanel.resetTable();
+		betPane.setVisible(true);
 		
 	}
 
@@ -153,24 +164,17 @@ public class ApplicationWindow {
 
 	}
 	
-	public void printCards() {
-		
-		((TablePanel) tablePanel).printCards();
-		
-	}
+//	public void printCards() {
+//		
+//		((TablePanel) tablePanel).printCards();
+//		
+//	}
 	
 	interface ServerListener {
 		
 		public void onMessage();
 		
 	}
-
-	public void printBeinningDealerCards() {
-		
-		tablePanel.printBeginningDealerCards();
-		
-	}
-
 	
 
 }

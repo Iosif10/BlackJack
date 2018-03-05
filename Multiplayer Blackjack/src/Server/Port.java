@@ -2,6 +2,6 @@ package Server;
 
 public class Port {
 
-	public static final int port = 7778;
+	public static final int port = 7777;
 	
 }

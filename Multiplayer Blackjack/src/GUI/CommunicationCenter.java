@@ -56,7 +56,19 @@ public class CommunicationCenter {
 						for (int i = 0; i<numberOfCards; i++) {
 							client.cards.add(new Card(sc.nextInt(), sc.next()));
 						}
-						aW.printCards();
+						aW.tablePanel.printCards();
+						continue;
+					} else if (s.equals("players")) {
+						client.players.clear();
+						System.out.println(protocol);
+						int numberOfPlayers = sc.nextInt();
+						for (int i = 0; i<numberOfPlayers; i++) {
+							client.players.add(new Client(sc.next(), sc.nextInt(), sc.nextInt()));
+						}
+						aW.tablePanel.printPlayers();
+						continue;
+					} else if (s.equals("turnInfo")) {
+						aW.tablePanel.turnInfo(sc.nextInt());
 						continue;
 					} else if (s.equals("beginningDealerCards")) {
 						client.dealer.cards.clear();
@@ -64,7 +76,17 @@ public class CommunicationCenter {
 						for (int i = 0; i<numberOfCards; i++) {
 							client.dealer.cards.add(new Card(sc.nextInt(), sc.next()));
 						}
-						aW.printBeinningDealerCards();
+						aW.tablePanel.printBeginningDealerCards();
+						continue;
+					} else if (s.equals("dealerCards")) {
+						client.dealer.cards.clear();
+						client.dealer.points = sc.nextInt();
+						int numberOfCards = sc.nextInt();
+						for (int i = 0; i<numberOfCards; i++) {
+							client.dealer.cards.add(new Card(sc.nextInt(), sc.next()));
+						}
+						System.out.println("in ccccccccccccccccccccccc");
+						aW.tablePanel.printDealerCards();
 						continue;
 					} else if (s.equals("turn")) {
 						aW.tablePanel.hit.setEnabled(true);
@@ -80,6 +102,36 @@ public class CommunicationCenter {
 					} else if (s.equals("BlackJack")) {
 						client.bePatientflag = true;
 						aW.tablePanel.BlackJack();
+						continue;
+					} else if (s.equals("over21Loss")) {
+						aW.newTable();
+						client.money = sc.nextInt();
+						client.bet = 0;
+						aW.tablePanel.over21Loss();
+						continue;
+					} else if (s.equals("equal")) {
+						aW.newTable();
+						client.money = sc.nextInt();
+						client.bet = 0;
+						aW.tablePanel.equal();
+						continue;
+					} else if (s.equals("blackJackWin")) {
+						aW.newTable();
+						client.money = sc.nextInt();
+						client.bet = 0;
+						aW.tablePanel.blackJackWin();
+						continue;
+					} else if (s.equals("loss")) {
+						aW.newTable();
+						client.money = sc.nextInt();
+						client.bet = 0;
+						aW.tablePanel.loss();
+						continue;
+					} else if (s.equals("win")) {
+						aW.newTable();
+						client.money = sc.nextInt();
+						client.bet = 0;
+						aW.tablePanel.win();
 						continue;
 					}
 					
@@ -102,14 +154,11 @@ public class CommunicationCenter {
 
 					@Override
 					public void run() {
-
 						try {
 							if (client.name != null && client.money != 0) {
 								out.writeUTF("newuser#" + client.name + "#" + client.money);
 							}
-
 						} catch (IOException e) {
-
 							e.printStackTrace();
 						}
 
@@ -178,6 +227,7 @@ public class CommunicationCenter {
 				}).start();
 
 				aW.betPane.setVisible(false);
+				aW.tablePanel.printInfo();
 
 			}
 		});
@@ -191,11 +241,10 @@ public class CommunicationCenter {
 					out.writeUTF("hit#");
 					
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
-				aW.printCards();
+				aW.tablePanel.printCards();
 				
 				
 
@@ -206,6 +255,12 @@ public class CommunicationCenter {
 
 			@Override
 			public void onClick() {
+				try {
+					out.writeUTF("stand#");
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				
 
 			}
@@ -219,11 +274,10 @@ public class CommunicationCenter {
 					out.writeUTF("dble#");
 					
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
-				aW.printCards();
+				aW.tablePanel.printCards();
 
 			}
 		});

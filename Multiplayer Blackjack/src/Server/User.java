@@ -101,6 +101,7 @@ class User implements Runnable {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+						this.playing = false;
 						continue;
 					};
 					if (this.points == 21) {
@@ -111,12 +112,13 @@ class User implements Runnable {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+						this.playing = false;
 						continue;
 					} else continue;
 				
 			} else if (s.equals("stand")) {
-				
-					continue;
+				this.playing = false;
+				continue;
 				
 			} else if (s.equals("dble")) {
 				
@@ -125,6 +127,7 @@ class User implements Runnable {
 										
 					cardGiver.onCommand();
 					sendCards();
+					this.playing = false;
 					
 					if (this.points > 21) {
 						try {
@@ -187,9 +190,57 @@ class User implements Runnable {
 		
 		
 	}
+	
+	public void sendBeginningDealerCards(User dealer) {
+		
+		String toSend = "beginningDealerCards#" + dealer.cards.size()+"#";
+		
+		for (Card c : dealer.cards) {
+			toSend = toSend+ c.toString();
+		}
+		try {
+			out.writeUTF(toSend);
+							
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public int pointsCalculator() {
+
+		int points = 0;
+		int aces = 0;
+
+		for (Card c : cards) {
+			if (c.value>10) {
+				points +=10;
+			} else {
+				points += c.value;
+			}
+			
+			if (c.value == 1) {
+				points += 10;
+				aces++;
+			}
+		}
+		;
+
+		if ((points > 21) && (aces > 0)) {
+			for (int i = 0; i < aces; i++) {
+				points -= 10;
+				if (points <= 21) {
+					return points;
+				}
+			}
+			;
+			return points;
+		} else
+			return points;
+
+	}
 
 	public String toString() {
-		return "Name: " + name + "; money: " + money + "; bet: " + bet + "; playing: " + playing;
+		return name + "#" + money + "#" + bet + "#";
 	}
 
 	public void setCardGiver(UserListener cardGiver) {

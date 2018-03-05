@@ -74,6 +74,7 @@ public class WelcomePanel extends JPanel {
 		formatter.setAllowsInvalid(false);
 		formatter.setCommitsOnValidEdit(true);
 		
+		
 		JFormattedTextField Cash = new JFormattedTextField(formatter);
 		Cash.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
@@ -96,7 +97,7 @@ public class WelcomePanel extends JPanel {
 				if ((Nickname.getText() != null) && (Cash.getText() != null) && (listener != null)) {
 					
 					client.name = Nickname.getText();
-					client.money = Integer.valueOf(Cash.getText());
+					client.money = Integer.valueOf(Cash.getText().replaceAll(",", ""));
 					
 					System.out.println("in iffffff");
 
