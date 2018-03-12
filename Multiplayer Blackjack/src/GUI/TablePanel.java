@@ -13,6 +13,7 @@ import GUI.ApplicationWindow.ButtonListener;
 import GUI.ApplicationWindow.ServerListener;
 import Server.Card;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -62,6 +63,40 @@ public class TablePanel extends JPanel {
 	private JLabel turn4;
 	private JLabel on5;
 	private JLabel turn5;
+	private JLabel card1;
+	private JLabel dealerCard1;
+	private JLabel dealerCard2;
+	private JLabel dealerCard3;
+	private JLabel dealerCard4;
+	private JLabel dealerCard5;
+	private JLabel dealerCard6;
+	private JLabel dealerCard7;
+	private JLabel dealerCard8;
+	private JLabel dealerCard9;
+	private JLabel dealerCard10;
+	private JLabel dealerCard11;
+	private JLabel splitCard1;
+	private JLabel splitCard2;
+	private JLabel splitCard3;
+	private JLabel splitCard4;
+	private JLabel splitCard5;
+	private JLabel splitCard6;
+	private JLabel splitCard7;
+	private JLabel splitCard8;
+	private JLabel splitCard9;
+	private JLabel splitCard10;
+	private JLabel splitCard11;
+	private JLabel card2;
+	private JLabel card3;
+	private JLabel card4;
+	private JLabel card5;
+	private JLabel card6;
+	private JLabel card7;
+	private JLabel card8;
+	private JLabel card9;
+	private JLabel card10;
+	private JLabel card11;
+	private JLabel nameLabel;
 
 	/**
 	 * Create the panel.
@@ -88,7 +123,7 @@ public class TablePanel extends JPanel {
 		label_1 = new JLabel("");
 		label_1.setForeground(Color.WHITE);
 		label_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		label_1.setBounds(354, 56, 472, 30);
+		label_1.setBounds(344, 115, 472, 30);
 		panel.add(label_1);
 
 		player1 = new JLabel("");
@@ -140,96 +175,152 @@ public class TablePanel extends JPanel {
 		player5money.setForeground(Color.WHITE);
 		player5money.setBounds(752, 156, 87, 14);
 		panel.add(player5money);
-		
+
 		on1 = new JLabel("");
 		on1.setForeground(new Color(255, 255, 0));
 		on1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		on1.setBounds(144, 210, 26, 14);
 		panel.add(on1);
-		
+
 		turn1 = new JLabel("");
 		turn1.setForeground(Color.YELLOW);
 		turn1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		turn1.setBounds(132, 224, 50, 14);
 		panel.add(turn1);
-		
+
 		player1bet = new JLabel("");
 		player1bet.setFont(new Font("Tahoma", Font.BOLD, 11));
 		player1bet.setForeground(Color.WHITE);
 		player1bet.setBounds(170, 286, 87, 14);
 		panel.add(player1bet);
-		
+
 		player2bet = new JLabel("");
 		player2bet.setForeground(Color.WHITE);
 		player2bet.setFont(new Font("Tahoma", Font.BOLD, 11));
 		player2bet.setBounds(322, 352, 87, 14);
 		panel.add(player2bet);
-		
+
 		player3bet = new JLabel("");
 		player3bet.setForeground(Color.WHITE);
 		player3bet.setFont(new Font("Tahoma", Font.BOLD, 11));
 		player3bet.setBounds(491, 369, 87, 14);
 		panel.add(player3bet);
-		
+
 		player4bet = new JLabel("");
 		player4bet.setForeground(Color.WHITE);
 		player4bet.setFont(new Font("Tahoma", Font.BOLD, 11));
 		player4bet.setBounds(662, 306, 87, 14);
 		panel.add(player4bet);
-		
+
 		player5bet = new JLabel("");
 		player5bet.setForeground(Color.WHITE);
 		player5bet.setFont(new Font("Tahoma", Font.BOLD, 11));
 		player5bet.setBounds(752, 181, 87, 14);
 		panel.add(player5bet);
-		
+
 		on2 = new JLabel("");
 		on2.setForeground(Color.YELLOW);
 		on2.setFont(new Font("Tahoma", Font.BOLD, 14));
 		on2.setBounds(274, 304, 26, 14);
 		panel.add(on2);
-		
+
 		turn2 = new JLabel("");
 		turn2.setForeground(Color.YELLOW);
 		turn2.setFont(new Font("Tahoma", Font.BOLD, 14));
 		turn2.setBounds(262, 318, 50, 14);
 		panel.add(turn2);
-		
+
 		on3 = new JLabel("");
 		on3.setForeground(Color.YELLOW);
 		on3.setFont(new Font("Tahoma", Font.BOLD, 14));
 		on3.setBounds(448, 338, 26, 14);
 		panel.add(on3);
-		
+
 		turn3 = new JLabel("");
 		turn3.setForeground(Color.YELLOW);
 		turn3.setFont(new Font("Tahoma", Font.BOLD, 14));
 		turn3.setBounds(436, 352, 50, 14);
 		panel.add(turn3);
-		
+
 		on4 = new JLabel("");
 		on4.setForeground(Color.YELLOW);
 		on4.setFont(new Font("Tahoma", Font.BOLD, 14));
 		on4.setBounds(619, 304, 26, 14);
 		panel.add(on4);
-		
+
 		turn4 = new JLabel("");
 		turn4.setForeground(Color.YELLOW);
 		turn4.setFont(new Font("Tahoma", Font.BOLD, 14));
 		turn4.setBounds(607, 318, 50, 14);
 		panel.add(turn4);
-		
+
 		on5 = new JLabel("");
 		on5.setForeground(Color.YELLOW);
 		on5.setFont(new Font("Tahoma", Font.BOLD, 14));
 		on5.setBounds(750, 210, 26, 14);
 		panel.add(on5);
-		
+
 		turn5 = new JLabel("");
 		turn5.setForeground(Color.YELLOW);
 		turn5.setFont(new Font("Tahoma", Font.BOLD, 14));
 		turn5.setBounds(738, 224, 50, 14);
 		panel.add(turn5);
+
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(10, 407, 190, 32);
+		panel.add(lblNewLabel);
+		lblNewLabel.setForeground(Color.WHITE);
+
+		dealerCard1 = new JLabel("");
+		dealerCard1.setBounds(364, 26, 55, 80);
+		panel.add(dealerCard1);
+
+		dealerCard2 = new JLabel("");
+		dealerCard2.setBounds(393, 26, 55, 80);
+		panel.add(dealerCard2);
+
+		dealerCard3 = new JLabel("");
+		dealerCard3.setBounds(422, 26, 55, 80);
+		panel.add(dealerCard3);
+
+		dealerCard4 = new JLabel("");
+		dealerCard4.setBounds(451, 26, 55, 80);
+		panel.add(dealerCard4);
+
+		dealerCard5 = new JLabel("");
+		dealerCard5.setBounds(480, 26, 55, 80);
+		panel.add(dealerCard5);
+
+		dealerCard6 = new JLabel("");
+		dealerCard6.setBounds(509, 26, 55, 80);
+		panel.add(dealerCard6);
+
+		dealerCard7 = new JLabel("");
+		dealerCard7.setBounds(538, 26, 55, 80);
+		panel.add(dealerCard7);
+
+		dealerCard8 = new JLabel("");
+		dealerCard8.setBounds(567, 26, 55, 80);
+		panel.add(dealerCard8);
+
+		dealerCard9 = new JLabel("");
+		dealerCard9.setBounds(596, 26, 55, 80);
+		panel.add(dealerCard9);
+
+		dealerCard10 = new JLabel("");
+		dealerCard10.setBounds(625, 26, 55, 80);
+		panel.add(dealerCard10);
+
+		dealerCard11 = new JLabel("");
+		dealerCard11.setBounds(654, 26, 55, 80);
+		panel.add(dealerCard11);
+		
+		nameLabel = new JLabel("");
+		nameLabel.setForeground(Color.BLUE);
+		nameLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
+		nameLabel.setBounds(715, 409, 190, 41);
+		panel.add(nameLabel);
+		
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(183, 0, 0));
@@ -275,7 +366,7 @@ public class TablePanel extends JPanel {
 				dble.setEnabled(false);
 				split.setEnabled(false);
 
-				//bePatient();
+				// bePatient();
 
 			}
 
@@ -307,7 +398,7 @@ public class TablePanel extends JPanel {
 				split.setEnabled(false);
 
 				if (client.bePatientflag == false) {
-					//bePatient();
+					// bePatient();
 				}
 
 			}
@@ -325,16 +416,101 @@ public class TablePanel extends JPanel {
 		panel_1.add(panel_2);
 		panel_2.setLayout(null);
 
-		lblNewLabel = new JLabel("");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setBounds(63, 5, 394, 59);
-		panel_2.add(lblNewLabel);
+		card1 = new JLabel("");
+		card1.setBounds(198, 11, 55, 80);
+//		card1.setIcon(new ImageIcon(
+//				"C:\\Users\\user\\Desktop\\BlackJack\\BlackJack\\Multiplayer Blackjack\\src\\Resources\\CardsImages\\1#club#.png"));
+		panel_2.add(card1);
+
+		card2 = new JLabel("");
+		card2.setBounds(227, 11, 55, 80);
+		panel_2.add(card2);
+
+		card3 = new JLabel("");
+		card3.setBounds(256, 11, 55, 80);
+		panel_2.add(card3);
+
+		card4 = new JLabel("");
+		card4.setBounds(285, 11, 55, 80);
+		panel_2.add(card4);
+
+		card5 = new JLabel("");
+		card5.setBounds(314, 11, 55, 80);
+		panel_2.add(card5);
+
+		card6 = new JLabel("");
+		card6.setBounds(343, 11, 55, 80);
+		panel_2.add(card6);
+
+		card7 = new JLabel("");
+		card7.setBounds(372, 11, 55, 80);
+		panel_2.add(card7);
+
+		card8 = new JLabel("");
+		card8.setBounds(401, 11, 55, 80);
+		panel_2.add(card8);
+
+		card9 = new JLabel("");
+		card9.setBounds(430, 11, 55, 80);
+		panel_2.add(card9);
+
+		card10 = new JLabel("");
+		card10.setBounds(459, 11, 55, 80);
+		panel_2.add(card10);
+
+		card11 = new JLabel("");
+		card11.setBounds(488, 11, 55, 80);
+		panel_2.add(card11);
 
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(183, 0, 0));
 		panel_3.setBounds(0, 95, 553, 94);
 		panel_1.add(panel_3);
 		panel_3.setLayout(null);
+
+		splitCard1 = new JLabel("");
+		splitCard1.setBounds(198, 11, 55, 80);
+		panel_3.add(splitCard1);
+
+		splitCard2 = new JLabel("");
+		splitCard2.setBounds(227, 11, 55, 80);
+		panel_3.add(splitCard2);
+
+		splitCard3 = new JLabel("");
+		splitCard3.setBounds(256, 11, 55, 80);
+		panel_3.add(splitCard3);
+
+		splitCard4 = new JLabel("");
+		splitCard4.setBounds(285, 11, 55, 80);
+		panel_3.add(splitCard4);
+
+		splitCard5 = new JLabel("");
+		splitCard5.setBounds(314, 11, 55, 80);
+		panel_3.add(splitCard5);
+
+		splitCard6 = new JLabel("");
+		splitCard6.setBounds(343, 11, 55, 80);
+		panel_3.add(splitCard6);
+
+		splitCard7 = new JLabel("");
+		splitCard7.setBounds(372, 11, 55, 80);
+		panel_3.add(splitCard7);
+
+		splitCard8 = new JLabel("");
+		splitCard8.setBounds(401, 11, 55, 80);
+		panel_3.add(splitCard8);
+
+		splitCard9 = new JLabel("");
+		splitCard9.setBounds(430, 11, 55, 80);
+		panel_3.add(splitCard9);
+
+		splitCard10 = new JLabel("");
+		splitCard10.setBounds(459, 11, 55, 80);
+		panel_3.add(splitCard10);
+
+		splitCard11 = new JLabel("");
+		splitCard11.setBounds(488, 11, 55, 80);
+		panel_3.add(splitCard11);
 
 		JLabel lblBet = new JLabel("BET (USD) :");
 		lblBet.setForeground(Color.WHITE);
@@ -381,16 +557,55 @@ public class TablePanel extends JPanel {
 	}
 
 	public void printCards() {
-		String toPrint = "";
-		for (Card c : client.cards) {
-			toPrint = toPrint + c.toString();
+		String adress;
+		for (int i = 0; i < client.cards.size(); i++) {
+			adress = "C:\\Users\\user\\Desktop\\BlackJack\\BlackJack\\Multiplayer Blackjack\\src\\Resources\\CardsImages\\"
+					+ client.cards.get(i).toString() + ".png";
+			switch (i) {
+			case 0:
+				card1.setIcon(new ImageIcon(adress));
+				break;
+			case 1:
+				card2.setIcon(new ImageIcon(adress));
+				break;
+			case 2:
+				card3.setIcon(new ImageIcon(adress));
+				break;
+			case 3:
+				card4.setIcon(new ImageIcon(adress));
+				break;
+			case 4:
+				card5.setIcon(new ImageIcon(adress));
+				break;
+			case 5:
+				card6.setIcon(new ImageIcon(adress));
+				break;
+			case 6:
+				card7.setIcon(new ImageIcon(adress));
+				break;
+			case 7:
+				card8.setIcon(new ImageIcon(adress));
+				break;
+			case 8:
+				card9.setIcon(new ImageIcon(adress));
+				break;
+			case 9:
+				card10.setIcon(new ImageIcon(adress));
+				break;
+			case 10:
+				card11.setIcon(new ImageIcon(adress));
+				break;
+			default:
+				break;
+			}
 		}
-		lblNewLabel.setText(toPrint);
+
 		printInfo();
 	}
 
 	public void printInfo() {
-
+		
+		nameLabel.setText(client.name);
 		lblNewLabel_1.setText("" + client.bet);
 		label.setText("" + client.money);
 
@@ -433,29 +648,77 @@ public class TablePanel extends JPanel {
 
 	}
 
-//	public void bePatient() {
-//
-//		JOptionPane.showMessageDialog(this,
-//				"Your turn is finished. Please, be patient till the end of the round calculation.");
-//
-//	}
+	// public void bePatient() {
+	//
+	// JOptionPane.showMessageDialog(this,
+	// "Your turn is finished. Please, be patient till the end of the round
+	// calculation.");
+	//
+	// }
 
 	public void printBeginningDealerCards() {
+		
+		dealerCard1.setIcon(new ImageIcon("C:\\Users\\user\\Desktop\\BlackJack\\BlackJack\\Multiplayer Blackjack\\src\\Resources\\CardsImages\\"
+					+ client.dealer.cards.get(0).toString() + ".png"));
+		dealerCard2.setIcon(new ImageIcon("C:\\Users\\user\\Desktop\\BlackJack\\BlackJack\\Multiplayer Blackjack\\src\\Resources\\cardBack.png"));
 
-		label_1.setText(client.dealer.cards.get(0).toString() + "secondDealerCard#");
+		//label_1.setText(client.dealer.cards.get(0).toString() + "secondDealerCard#");
 
 	}
 
 	public void printDealerCards() {
-
-		System.out.println("in print dealer cards");
-		String toPrint = "";
-		for (Card c : client.dealer.cards) {
-			toPrint = toPrint + c.toString();
+		
+		String adress;
+		for (int i = 0; i < client.dealer.cards.size(); i++) {
+			adress = "C:\\Users\\user\\Desktop\\BlackJack\\BlackJack\\Multiplayer Blackjack\\src\\Resources\\CardsImages\\"
+					+ client.dealer.cards.get(i).toString() + ".png";
+			switch (i) {
+			case 0:
+				dealerCard1.setIcon(new ImageIcon(adress));
+				break;
+			case 1:
+				dealerCard2.setIcon(new ImageIcon(adress));
+				break;
+			case 2:
+				dealerCard3.setIcon(new ImageIcon(adress));
+				break;
+			case 3:
+				dealerCard4.setIcon(new ImageIcon(adress));
+				break;
+			case 4:
+				dealerCard5.setIcon(new ImageIcon(adress));
+				break;
+			case 5:
+				dealerCard6.setIcon(new ImageIcon(adress));
+				break;
+			case 6:
+				dealerCard7.setIcon(new ImageIcon(adress));
+				break;
+			case 7:
+				dealerCard8.setIcon(new ImageIcon(adress));
+				break;
+			case 8:
+				dealerCard9.setIcon(new ImageIcon(adress));
+				break;
+			case 9:
+				dealerCard10.setIcon(new ImageIcon(adress));
+				break;
+			case 10:
+				dealerCard11.setIcon(new ImageIcon(adress));
+				break;
+			default:
+				break;
+			}
 		}
 
-		label_1.setText(toPrint);
-		System.out.println("dupa print dealer cards");
+//		System.out.println("in print dealer cards");
+//		String toPrint = "";
+//		for (Card c : client.dealer.cards) {
+//			toPrint = toPrint + c.toString();
+//		}
+//
+//		label_1.setText(toPrint);
+//		System.out.println("dupa print dealer cards");
 
 	}
 
@@ -463,8 +726,57 @@ public class TablePanel extends JPanel {
 
 		lblNewLabel_1.setText("");
 		label.setText("" + client.money);
-		lblNewLabel.setText("");
-		label_1.setText("");
+		
+		card1.setIcon(null);
+		card2.setIcon(null);
+		card3.setIcon(null);
+		card4.setIcon(null);
+		card5.setIcon(null);
+		card6.setIcon(null);
+		card7.setIcon(null);
+		card8.setIcon(null);
+		card9.setIcon(null);
+		card10.setIcon(null);
+		card11.setIcon(null);
+		dealerCard1.setIcon(null);
+		dealerCard2.setIcon(null);
+		dealerCard3.setIcon(null);
+		dealerCard4.setIcon(null);
+		dealerCard5.setIcon(null);
+		dealerCard6.setIcon(null);
+		dealerCard7.setIcon(null);
+		dealerCard8.setIcon(null);
+		dealerCard9.setIcon(null);
+		dealerCard10.setIcon(null);
+		dealerCard11.setIcon(null);
+		splitCard1.setIcon(null);
+		splitCard1.setIcon(null);
+		splitCard2.setIcon(null);
+		splitCard3.setIcon(null);
+		splitCard4.setIcon(null);
+		splitCard5.setIcon(null);
+		splitCard6.setIcon(null);
+		splitCard7.setIcon(null);
+		splitCard8.setIcon(null);
+		splitCard9.setIcon(null);
+		splitCard10.setIcon(null);
+		splitCard11.setIcon(null);
+		
+		player1.setText("");
+		player1money.setText("");
+		player1bet.setText("");
+		player2.setText("");
+		player2money.setText("");
+		player2bet.setText("");
+		player3.setText("");
+		player3money.setText("");
+		player3bet.setText("");
+		player4.setText("");
+		player4money.setText("");
+		player4bet.setText("");
+		player5.setText("");
+		player5money.setText("");
+		player5bet.setText("");
 
 	}
 
@@ -472,6 +784,7 @@ public class TablePanel extends JPanel {
 
 		JOptionPane.showMessageDialog(this,
 				"The round is finished. Good luck at the next one! Your have " + client.money + "(USD).");
+		printInfo();
 
 	}
 
@@ -480,6 +793,7 @@ public class TablePanel extends JPanel {
 		JOptionPane.showMessageDialog(this,
 				"The round is finished. The dealer made also BlackJack. It's a draw. Your have " + client.money
 						+ "(USD).");
+		printInfo();
 
 	}
 
@@ -487,14 +801,15 @@ public class TablePanel extends JPanel {
 
 		JOptionPane.showMessageDialog(this,
 				"The round is finished. You WON with that wonderful BlackJack! Your have " + client.money + "(USD).");
+		printInfo();
 
 	}
 
 	public void loss() {
 
-		JOptionPane.showMessageDialog(this,
-				"The round is finished. The dealer is better than you, with " + client.dealer.points + ". Good luck at the next round! Your have "
-						+ client.money + "(USD).");
+		JOptionPane.showMessageDialog(this, "The round is finished. The dealer is better than you, with "
+				+ client.dealer.points + ". Good luck at the next round! Your have " + client.money + "(USD).");
+		printInfo();
 
 	}
 
@@ -502,6 +817,7 @@ public class TablePanel extends JPanel {
 
 		JOptionPane.showMessageDialog(this,
 				"Congratulations, you WON this round! Your have " + client.money + "(USD).");
+		printInfo();
 
 	}
 
@@ -534,53 +850,80 @@ public class TablePanel extends JPanel {
 				player5money.setText(client.players.get(i).money + " USD");
 				player5bet.setText("BET: " + client.players.get(i).bet + " USD");
 				break;
-			default: break;
+			default:
+				break;
 			}
 		}
 
 	}
 
 	public void turnInfo(int playerNumber) {
-		
+
 		switch (playerNumber) {
-		
-		case 1 : 
-			on1.setText("ON"); turn1.setText("TURN!");
-			on2.setText(""); turn2.setText("");
-			on3.setText(""); turn3.setText("");
-			on4.setText(""); turn4.setText("");
-			on5.setText(""); turn5.setText("");
+
+		case 1:
+			on1.setText("ON");
+			turn1.setText("TURN!");
+			on2.setText("");
+			turn2.setText("");
+			on3.setText("");
+			turn3.setText("");
+			on4.setText("");
+			turn4.setText("");
+			on5.setText("");
+			turn5.setText("");
 			break;
-		case 2 : 
-			on1.setText(""); turn1.setText("");
-			on2.setText("ON"); turn2.setText("TURN!");
-			on3.setText(""); turn3.setText("");
-			on4.setText(""); turn4.setText("");
-			on5.setText(""); turn5.setText("");
+		case 2:
+			on1.setText("");
+			turn1.setText("");
+			on2.setText("ON");
+			turn2.setText("TURN!");
+			on3.setText("");
+			turn3.setText("");
+			on4.setText("");
+			turn4.setText("");
+			on5.setText("");
+			turn5.setText("");
 			break;
-		case 3 : 
-			on1.setText(""); turn1.setText("");
-			on2.setText(""); turn2.setText("");
-			on3.setText("ON"); turn3.setText("TURN!");
-			on4.setText(""); turn4.setText("");
-			on5.setText(""); turn5.setText("");
+		case 3:
+			on1.setText("");
+			turn1.setText("");
+			on2.setText("");
+			turn2.setText("");
+			on3.setText("ON");
+			turn3.setText("TURN!");
+			on4.setText("");
+			turn4.setText("");
+			on5.setText("");
+			turn5.setText("");
 			break;
-		case 4 : 
-			on1.setText(""); turn1.setText("");
-			on2.setText(""); turn2.setText("");
-			on3.setText(""); turn3.setText("");
-			on4.setText("ON"); turn4.setText("TURN!");
-			on5.setText(""); turn5.setText("");
+		case 4:
+			on1.setText("");
+			turn1.setText("");
+			on2.setText("");
+			turn2.setText("");
+			on3.setText("");
+			turn3.setText("");
+			on4.setText("ON");
+			turn4.setText("TURN!");
+			on5.setText("");
+			turn5.setText("");
 			break;
-		case 5 : 
-			on1.setText(""); turn1.setText("");
-			on2.setText(""); turn2.setText("");
-			on3.setText(""); turn3.setText("");
-			on4.setText(""); turn4.setText("");
-			on5.setText("ON"); turn5.setText("TURN!");
+		case 5:
+			on1.setText("");
+			turn1.setText("");
+			on2.setText("");
+			turn2.setText("");
+			on3.setText("");
+			turn3.setText("");
+			on4.setText("");
+			turn4.setText("");
+			on5.setText("ON");
+			turn5.setText("TURN!");
 			break;
-		default : break;
+		default:
+			break;
 		}
-		
+
 	}
 }

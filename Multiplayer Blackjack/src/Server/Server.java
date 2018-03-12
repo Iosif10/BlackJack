@@ -7,6 +7,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import Server.BlackJackTheBrain.UserListener;
+
 public class Server {
 
 	interface ServerListener {
@@ -20,6 +22,12 @@ public class Server {
 	static ArrayList<User> users = new ArrayList<User>();
 	static DataInputStream in;
 	static ArrayList<User> newUsers = new ArrayList<User>();
+	
+	interface ClientListener {
+
+		public void onDeconnection();
+
+	}
 
 	public static void main(String[] args) throws Exception {
 
@@ -74,6 +82,8 @@ public class Server {
 						}
 
 					});
+					
+					initListeners(user);
 
 					if (users.size() == 1) {
 						users.add(user);
@@ -123,6 +133,22 @@ public class Server {
 			}
 
 		}
+
+	}
+	
+	private static void initListeners(User user) {
+
+		user.userRemover = new ClientListener() {
+
+			@Override
+			public void onDeconnection() {
+				
+				users.remove(user);
+				
+			}
+
+			
+		};
 
 	}
 

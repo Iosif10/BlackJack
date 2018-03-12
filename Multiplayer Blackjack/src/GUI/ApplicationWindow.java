@@ -98,6 +98,7 @@ public class ApplicationWindow {
 		client.cards.clear();
 		client.dealer.cards.clear();
 		tablePanel.resetTable();
+		tablePanel.printPlayers();
 		betPane.setVisible(true);
 		
 	}

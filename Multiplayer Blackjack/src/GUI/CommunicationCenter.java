@@ -133,6 +133,11 @@ public class CommunicationCenter {
 						client.bet = 0;
 						aW.tablePanel.win();
 						continue;
+					} else if (s.equals("wasOutside")) {
+						client.money = sc.nextInt();
+						client.bet = 0;
+						aW.newTable();
+						continue;
 					}
 					
 				} catch (IOException e1) {
@@ -213,10 +218,11 @@ public class CommunicationCenter {
 					public void run() {
 
 						try {
-							if (client.playing == false) {
+//							if (client.playing != false) {
 
 								out.writeUTF("skip#" + client.name);
-							}
+								System.out.println("dupa ce trimit skkkkkkkkkkkkip");
+//							}
 
 						} catch (IOException e) {
 
