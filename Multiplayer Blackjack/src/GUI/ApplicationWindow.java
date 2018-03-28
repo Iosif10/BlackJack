@@ -13,9 +13,14 @@ import javax.swing.text.NumberFormatter;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JTextField;
 import javax.swing.JFormattedTextField;
@@ -38,18 +43,12 @@ public class ApplicationWindow {
 
 	public TablePanel tablePanel;
 
-	/**
-	 * Create the application.
-	 */
 	public ApplicationWindow(Client c) {
 
 		this.client = c;
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frmBlackjackMultiplayer = new JFrame();
 		frmBlackjackMultiplayer.setForeground(new Color(255, 255, 255));
@@ -57,6 +56,33 @@ public class ApplicationWindow {
 		frmBlackjackMultiplayer.setTitle("BlackJack Multiplayer");
 		frmBlackjackMultiplayer.setBounds(30, 30, 930, 685);
 		frmBlackjackMultiplayer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		frmBlackjackMultiplayer.addWindowListener(new WindowListener() {
+
+			@Override
+			public void windowActivated(WindowEvent arg0) {}
+
+			@Override
+			public void windowClosed(WindowEvent arg0) {}
+
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				cashOutListener.onClick();
+			}
+
+			@Override
+			public void windowDeactivated(WindowEvent arg0) {}
+
+			@Override
+			public void windowDeiconified(WindowEvent arg0) {}
+
+			@Override
+			public void windowIconified(WindowEvent arg0) {}
+
+			@Override
+			public void windowOpened(WindowEvent arg0) {}
+			
+		});
 
 		welcomePanel = new WelcomePanel(client, enterListener);
 		frmBlackjackMultiplayer.add(welcomePanel);
@@ -73,6 +99,35 @@ public class ApplicationWindow {
 
 		betPane = new BetPane(client);
 		betPane.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		betPane.addWindowListener(new WindowListener() {
+
+			@Override
+			public void windowActivated(WindowEvent arg0) {}
+
+			@Override
+			public void windowClosed(WindowEvent arg0) {
+				client.playing = false;
+				client.bet = 0;
+				skipListener.onClick();
+			}
+
+			@Override
+			public void windowClosing(WindowEvent arg0) {}
+
+			@Override
+			public void windowDeactivated(WindowEvent arg0) {}
+
+			@Override
+			public void windowDeiconified(WindowEvent arg0) {}
+
+			@Override
+			public void windowIconified(WindowEvent arg0) {}
+
+			@Override
+			public void windowOpened(WindowEvent arg0) {}
+			
+		});
+		
 		betPane.setVisible(true);
 
 		betPane.setListener(betListener);
@@ -89,6 +144,7 @@ public class ApplicationWindow {
 		tablePanel.setStandListener(standListener);
 		tablePanel.setDbleListener(dbleListener);
 		tablePanel.setSplitListener(splitListener);
+		tablePanel.setCashOutListener(cashOutListener);
 		
 		
 	}
@@ -110,8 +166,9 @@ public class ApplicationWindow {
 	ButtonListener standListener;
 	ButtonListener dbleListener;
 	ButtonListener splitListener;
+	ButtonListener cashOutListener;
 
-	
+		
 	public void setEnterListener(ButtonListener listener) {
 
 		enterListener = listener;
@@ -157,6 +214,12 @@ public class ApplicationWindow {
 
 	}
 	
+	public void setCashOutListener(ButtonListener listener) {
+
+		cashOutListener = listener;
+
+	}
+	
 	
 
 	interface ButtonListener {
@@ -164,13 +227,7 @@ public class ApplicationWindow {
 		public void onClick();
 
 	}
-	
-//	public void printCards() {
-//		
-//		((TablePanel) tablePanel).printCards();
-//		
-//	}
-	
+
 	interface ServerListener {
 		
 		public void onMessage();

@@ -20,7 +20,7 @@ public class TableDrawingComponent extends JPanel{
 		try {
 			image = ImageIO.read(this.getClass().getResource("/Resources/table.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		

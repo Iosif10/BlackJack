@@ -11,18 +11,13 @@ import Server.BlackJackTheBrain.UserListener;
 
 public class Server {
 
-	interface ServerListener {
-		void onMessage(String name, String m);
-
-	}
-
 	static ServerSocket serverSocket;
 	static Socket socket;
 	static DataOutputStream out;
 	static ArrayList<User> users = new ArrayList<User>();
 	static DataInputStream in;
 	static ArrayList<User> newUsers = new ArrayList<User>();
-	
+
 	interface ClientListener {
 
 		public void onDeconnection();
@@ -35,7 +30,7 @@ public class Server {
 		serverSocket = new ServerSocket(Port.port);
 		System.out.println("Server started...");
 
-		users.add(new User("Dealer", 1000000));
+		users.add(new User("Dealer", 10000000));
 
 		Thread logging = new Thread(new Runnable() {
 
@@ -46,55 +41,36 @@ public class Server {
 					try {
 						socket = serverSocket.accept();
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
+
 						e1.printStackTrace();
 					}
 					System.out.println("Connection from:" + socket.getInetAddress());
 					try {
 						out = new DataOutputStream(socket.getOutputStream());
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
+
 						e1.printStackTrace();
 					}
 					try {
 						in = new DataInputStream(socket.getInputStream());
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
+
 						e1.printStackTrace();
 					}
-					User user = new User(out, in, new ServerListener() {
+					User user = new User(out, in);
 
-						@Override
-						public void onMessage(String name, String m) {
-							System.out.println("in listener");
-
-							for (User u : users) {
-								System.out.println("in listener in for in if");
-								try {
-									System.out.println("in listener in for in if in try");
-									u.out.writeUTF(name + ": " + m);
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								System.out.println("in listener in for in if after try");
-							}
-						}
-
-					});
-					
 					initListeners(user);
 
 					if (users.size() == 1) {
 						users.add(user);
-					} else { 
+					} else {
 						if ((users.size() >= 2) && ((users.size() + newUsers.size()) < 6)) {
 							newUsers.add(user);
+							user.initialWaiting();
 						} else {
-							if ((users.size() + newUsers.size()) > 5) {
-								System.out.println("Ne pare rau, masa este deja ocupata. Va rugam sa mai asteptati.");
-								continue;
-							}
+							user.tooManyPlayers();
+							System.out.println("Ne pare rau, masa este deja ocupata. Va rugam sa mai asteptati.");
+							continue;
 						}
 					}
 
@@ -109,20 +85,8 @@ public class Server {
 		});
 
 		logging.start();
-
-		BlackJackTheBrain blackJack;
-
-		while (true) {
-			if ((users.size() > 1) && (users.get(1).name != null)) {
-				System.out.println("am incepuuuuuuuuuuuuuuuuut joc nou");
-				blackJack = new BlackJackTheBrain(users);
-				users.addAll(newUsers);
-				newUsers.clear();
-				break;
-			}
-		}
-
-		blackJack = new BlackJackTheBrain();
+		
+		BlackJackTheBrain blackJack = new BlackJackTheBrain();
 
 		while (true) {
 
@@ -130,24 +94,24 @@ public class Server {
 				blackJack = new BlackJackTheBrain(users);
 				users.addAll(newUsers);
 				newUsers.clear();
+				Thread.sleep(1000);
 			}
 
 		}
 
 	}
-	
+
 	private static void initListeners(User user) {
 
 		user.userRemover = new ClientListener() {
 
 			@Override
 			public void onDeconnection() {
-				
+
 				users.remove(user);
-				
+
 			}
 
-			
 		};
 
 	}

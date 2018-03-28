@@ -38,9 +38,6 @@ public class WelcomePanel extends JPanel {
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		
 		setBounds(0, 0, 915, 685);
@@ -92,15 +89,11 @@ public class WelcomePanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				// documentListener; filter
-
 				if ((Nickname.getText() != null) && (Cash.getText() != null) && (listener != null)) {
 					
 					client.name = Nickname.getText();
 					client.money = Integer.valueOf(Cash.getText().replaceAll(",", ""));
 					
-					System.out.println("in iffffff");
-
 					listener.onClick();
 					
 				}

@@ -14,24 +14,29 @@ class User implements Runnable {
 
 	DataOutputStream out;
 	DataInputStream in;
-	Server.ServerListener listener;
 
 	String name;
 	int money;
 	int bet;
+	int splitBet;
 	boolean playing;
 	ArrayList<Card> cards;
+	ArrayList<Card> splitCards;
 	int points;
+	int splitPoints;
 
 	UserListener cardGiver;
-	ClientListener userRemover;
+	UserListener splitCardGiver;
 
-	public User(DataOutputStream out, DataInputStream in, Server.ServerListener listener) {
+	ClientListener userRemover;
+	boolean playingSplitCards;
+
+	public User(DataOutputStream out, DataInputStream in) {
 		this.out = out;
 		this.in = in;
-		this.listener = listener;
 		this.playing = true;
 		cards = new ArrayList<>();
+		splitCards = new ArrayList<>();
 	}
 
 	public User(String name, int money) {
@@ -39,6 +44,7 @@ class User implements Runnable {
 		this.money = money;
 		this.playing = true;
 		cards = new ArrayList<>();
+		splitCards = new ArrayList<>();
 	}
 
 	@Override
@@ -92,78 +98,165 @@ class User implements Runnable {
 						continue;
 					}
 				} else if (s.equals("hit")) {
+					if (playingSplitCards == false) {
+						cardGiver.onCommandForCards();
+						sendCards();
 
-					cardGiver.onCommand();
-					sendCards();
+						if (this.points > 21) {
+							try {
+								out.writeUTF("over21#");
 
-					if (this.points > 21) {
-						try {
-							out.writeUTF("over21#");
-							System.out.println("in 21");
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							} catch (IOException e) {
+
+								e.printStackTrace();
+							}
+							if (splitCards.size() == 0) {
+								this.playing = false;
+							} else {
+								playingSplitCards = true;
+							}
+							continue;
 						}
-						this.playing = false;
-						continue;
+						;
+						if (this.points == 21) {
+							try {
+								out.writeUTF("BlackJack#");
+
+							} catch (IOException e) {
+
+								e.printStackTrace();
+							}
+							if (splitCards.size() == 0) {
+								this.playing = false;
+							} else {
+								playingSplitCards = true;
+							}
+							continue;
+						} else
+							continue;
+					} else {
+						cardGiver.onCommandForSplitCards();
+						sendSplitCards();
+
+						if (this.splitPoints > 21) {
+							try {
+								out.writeUTF("over21#");
+
+							} catch (IOException e) {
+
+								e.printStackTrace();
+							}
+							this.playingSplitCards = false;
+							this.playing = false;
+							continue;
+						}
+						;
+						if (this.points == 21) {
+							try {
+								out.writeUTF("BlackJack#");
+
+							} catch (IOException e) {
+
+								e.printStackTrace();
+							}
+							this.playingSplitCards = false;
+							this.playing = false;
+							continue;
+						} else
+							continue;
 					}
-					;
-					if (this.points == 21) {
-						try {
-							out.writeUTF("BlackJack#");
-							System.out.println("in 21---2");
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						this.playing = false;
-						continue;
-					} else
-						continue;
-
 				} else if (s.equals("stand")) {
-					this.playing = false;
+
+					if (playingSplitCards) {
+						this.playing = false;
+					} else if (splitCards.size() > 0) {
+						playingSplitCards = true;
+					} else {
+						this.playing = false;
+					}
 					continue;
 
 				} else if (s.equals("dble")) {
 
-					this.money -= bet;
-					this.bet *= 2;
+					if (playingSplitCards == false) {
 
-					cardGiver.onCommand();
-					sendCards();
-					this.playing = false;
+						this.money -= bet;
+						this.bet *= 2;
 
-					if (this.points > 21) {
-						try {
-							out.writeUTF("over21#");
-							System.out.println("in 21");
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						cardGiver.onCommandForCards();
+						sendCards();
+						this.playing = false;
+
+						if (this.points > 21) {
+							try {
+								out.writeUTF("over21#");
+
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							continue;
 						}
-						continue;
+						if (this.points == 21) {
+							try {
+								out.writeUTF("BlackJack#");
+
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							continue;
+						} else
+							continue;
+					} else {
+						this.money -= splitBet;
+						this.splitBet *= 2;
+
+						cardGiver.onCommandForSplitCards();
+						sendSplitCards();
+						this.playingSplitCards = false;
+
+						if (this.splitPoints > 21) {
+							try {
+								out.writeUTF("over21#");
+
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							continue;
+						}
+						if (this.splitPoints == 21) {
+							try {
+								out.writeUTF("BlackJack#");
+
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+							continue;
+						} else
+							continue;
 					}
-					;
-					if (this.points == 21) {
-						try {
-							out.writeUTF("BlackJack#");
-							System.out.println("in 21---2");
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						continue;
-					} else
-						continue;
-
 				} else if (s.equals("split")) {
-					if (this.name.equals(sc.next())) {
 
-						continue;
-					}
+					bet = bet / 2;
+					splitBet = bet;
+
+					splitCards.add(cards.get(1));
+					cards.remove(1);
+					cardGiver.onCommandForCards();
+					cardGiver.onCommandForSplitCards();
+					sendCards();
+					sendSplitCards();
+
+					continue;
+				} else if (s.equals("cashedOut")) {
+					this.playing = false;
+					userRemover.onDeconnection();
+					continue;
+				} else if (s.equals("splitGameHorn")) {
+					this.playingSplitCards = true;
+					continue;
+
 				}
-				
+
 			} catch (SocketException s1) {
 				userRemover.onDeconnection();
 			} catch (IOException e1) {
@@ -173,9 +266,32 @@ class User implements Runnable {
 
 	}
 
+	public void initialWaiting() {
+
+		try {
+			out.writeUTF("initialWaiting#");
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
+	public void tooManyPlayers() {
+
+		try {
+			out.writeUTF("tooManyPlayers#");
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+
+	}
+
 	public void sendCards() {
 
 		String toSend = "cards#" + cards.size() + "#";
+
 		for (Card c : cards) {
 			toSend = toSend + c.toString();
 		}
@@ -183,7 +299,23 @@ class User implements Runnable {
 			out.writeUTF(toSend);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+		}
+	}
+
+	public void sendSplitCards() {
+
+		String toSend = "splitCards#" + splitCards.size() + "#";
+
+		for (Card c : splitCards) {
+			toSend = toSend + c.toString();
+		}
+		try {
+			out.writeUTF(toSend);
+
+		} catch (IOException e) {
+
 			e.printStackTrace();
 		}
 	}
@@ -193,7 +325,7 @@ class User implements Runnable {
 		try {
 			out.writeUTF("turn#");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		
 			e.printStackTrace();
 		}
 
@@ -214,7 +346,7 @@ class User implements Runnable {
 		}
 	}
 
-	public int pointsCalculator() {
+	public int pointsCalculator(ArrayList<Card> cards) {
 
 		int points = 0;
 		int aces = 0;
@@ -254,6 +386,12 @@ class User implements Runnable {
 	public void setCardGiver(UserListener cardGiver) {
 
 		this.cardGiver = cardGiver;
+
+	}
+
+	public void setSplitCardGiver(UserListener cardGiver) {
+
+		this.splitCardGiver = cardGiver;
 
 	}
 

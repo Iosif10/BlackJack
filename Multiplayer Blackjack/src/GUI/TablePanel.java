@@ -26,7 +26,6 @@ public class TablePanel extends JPanel {
 
 	public Client client;
 	public ButtonListener listener;
-	public JLabel lblNewLabel;
 	public JButton hit;
 	public JButton stand;
 	public JButton dble;
@@ -35,9 +34,9 @@ public class TablePanel extends JPanel {
 	public ButtonListener standListener;
 	public ButtonListener dbleListener;
 	public ButtonListener splitListener;
+	public ButtonListener cashOutListener;
 	private JLabel lblNewLabel_1;
 	private JLabel label;
-	private JLabel label_1;
 	private JLabel player1;
 	private JLabel player1money;
 	private JLabel player2money;
@@ -97,6 +96,11 @@ public class TablePanel extends JPanel {
 	private JLabel card10;
 	private JLabel card11;
 	private JLabel nameLabel;
+	private JButton cashOut;
+	private JLabel NowPlay;
+	private JLabel TheseCards;
+	private JLabel AndNow;
+	private JLabel TheseCards2;
 
 	/**
 	 * Create the panel.
@@ -119,12 +123,6 @@ public class TablePanel extends JPanel {
 		lblNewLabel_2.setForeground(Color.WHITE);
 		lblNewLabel_2.setBounds(218, 56, 146, 30);
 		panel.add(lblNewLabel_2);
-
-		label_1 = new JLabel("");
-		label_1.setForeground(Color.WHITE);
-		label_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		label_1.setBounds(344, 115, 472, 30);
-		panel.add(label_1);
 
 		player1 = new JLabel("");
 		player1.setForeground(Color.WHITE);
@@ -266,11 +264,6 @@ public class TablePanel extends JPanel {
 		turn5.setBounds(738, 224, 50, 14);
 		panel.add(turn5);
 
-		lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(10, 407, 190, 32);
-		panel.add(lblNewLabel);
-		lblNewLabel.setForeground(Color.WHITE);
-
 		dealerCard1 = new JLabel("");
 		dealerCard1.setBounds(364, 26, 55, 80);
 		panel.add(dealerCard1);
@@ -314,13 +307,12 @@ public class TablePanel extends JPanel {
 		dealerCard11 = new JLabel("");
 		dealerCard11.setBounds(654, 26, 55, 80);
 		panel.add(dealerCard11);
-		
+
 		nameLabel = new JLabel("");
 		nameLabel.setForeground(Color.BLUE);
 		nameLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
 		nameLabel.setBounds(715, 409, 190, 41);
 		panel.add(nameLabel);
-		
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(183, 0, 0));
@@ -361,12 +353,7 @@ public class TablePanel extends JPanel {
 
 					standListener.onClick();
 				}
-				hit.setEnabled(false);
-				stand.setEnabled(false);
-				dble.setEnabled(false);
-				split.setEnabled(false);
-
-				// bePatient();
+				
 
 			}
 
@@ -386,21 +373,10 @@ public class TablePanel extends JPanel {
 
 					dbleListener.onClick();
 				}
-
-				client.money -= client.bet;
-				client.bet *= 2;
-
+				
 				printInfo();
-
-				hit.setEnabled(false);
-				stand.setEnabled(false);
-				dble.setEnabled(false);
-				split.setEnabled(false);
-
-				if (client.bePatientflag == false) {
-					// bePatient();
-				}
-
+				
+				
 			}
 
 		});
@@ -410,6 +386,28 @@ public class TablePanel extends JPanel {
 		split.setEnabled(false);
 		panel_1.add(split);
 
+		split.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+
+				if (splitListener != null) {
+
+					splitListener.onClick();
+					split.setEnabled(false);
+					client.splitCards.add(client.cards.get(1));
+					card2.setIcon(null);
+					splitCard1.setIcon(new ImageIcon(
+							"C:\\Users\\user\\Desktop\\BlackJack\\BlackJack\\Multiplayer Blackjack\\src\\Resources\\CardsImages\\"
+									+ client.splitCards.get(0).toString() + ".png"));
+					NowPlay.setText("Now, play");
+					TheseCards.setText("these cards.");
+				}
+
+			}
+
+		});
+
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(183, 0, 0));
 		panel_2.setBounds(0, 0, 553, 94);
@@ -418,8 +416,9 @@ public class TablePanel extends JPanel {
 
 		card1 = new JLabel("");
 		card1.setBounds(198, 11, 55, 80);
-//		card1.setIcon(new ImageIcon(
-//				"C:\\Users\\user\\Desktop\\BlackJack\\BlackJack\\Multiplayer Blackjack\\src\\Resources\\CardsImages\\1#club#.png"));
+		// card1.setIcon(new ImageIcon(
+		// "C:\\Users\\user\\Desktop\\BlackJack\\BlackJack\\Multiplayer
+		// Blackjack\\src\\Resources\\CardsImages\\1#club#.png"));
 		panel_2.add(card1);
 
 		card2 = new JLabel("");
@@ -461,6 +460,18 @@ public class TablePanel extends JPanel {
 		card11 = new JLabel("");
 		card11.setBounds(488, 11, 55, 80);
 		panel_2.add(card11);
+
+		NowPlay = new JLabel("");
+		NowPlay.setForeground(Color.YELLOW);
+		NowPlay.setFont(new Font("Tahoma", Font.BOLD, 14));
+		NowPlay.setBounds(10, 22, 89, 28);
+		panel_2.add(NowPlay);
+
+		TheseCards = new JLabel("");
+		TheseCards.setForeground(Color.YELLOW);
+		TheseCards.setFont(new Font("Tahoma", Font.BOLD, 14));
+		TheseCards.setBounds(10, 42, 89, 28);
+		panel_2.add(TheseCards);
 
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(183, 0, 0));
@@ -512,38 +523,56 @@ public class TablePanel extends JPanel {
 		splitCard11.setBounds(488, 11, 55, 80);
 		panel_3.add(splitCard11);
 
+		AndNow = new JLabel("");
+		AndNow.setForeground(Color.YELLOW);
+		AndNow.setFont(new Font("Tahoma", Font.BOLD, 14));
+		AndNow.setBounds(10, 11, 89, 28);
+		panel_3.add(AndNow);
+
+		TheseCards2 = new JLabel("");
+		TheseCards2.setForeground(Color.YELLOW);
+		TheseCards2.setFont(new Font("Tahoma", Font.BOLD, 14));
+		TheseCards2.setBounds(10, 31, 89, 28);
+		panel_3.add(TheseCards2);
+
 		JLabel lblBet = new JLabel("BET (USD) :");
 		lblBet.setForeground(Color.WHITE);
-		lblBet.setFont(new Font("Tahoma", Font.ITALIC, 18));
-		lblBet.setBounds(772, 11, 111, 28);
+		lblBet.setFont(new Font("Tahoma", Font.ITALIC, 14));
+		lblBet.setBounds(777, 9, 89, 28);
 		panel_1.add(lblBet);
 
 		JLabel lblCashusd = new JLabel("CASH (USD) :");
 		lblCashusd.setForeground(Color.WHITE);
-		lblCashusd.setFont(new Font("Tahoma", Font.ITALIC, 18));
-		lblCashusd.setBounds(761, 100, 127, 28);
+		lblCashusd.setFont(new Font("Tahoma", Font.ITALIC, 14));
+		lblCashusd.setBounds(777, 66, 110, 28);
 		panel_1.add(lblCashusd);
 
 		lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setForeground(Color.WHITE);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 24));
-		lblNewLabel_1.setBounds(750, 39, 133, 30);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel_1.setBounds(750, 39, 127, 22);
 		panel_1.add(lblNewLabel_1);
 
 		label = new JLabel("");
 		label.setForeground(Color.WHITE);
-		label.setFont(new Font("Tahoma", Font.BOLD, 24));
-		label.setBounds(750, 128, 133, 30);
+		label.setFont(new Font("Tahoma", Font.BOLD, 20));
+		label.setBounds(760, 95, 133, 22);
 		panel_1.add(label);
 
-		split.addActionListener(new ActionListener() {
+		cashOut = new JButton("$ Cash Out $");
+		cashOut.setForeground(new Color(0, 204, 51));
+		cashOut.setFont(new Font("Tahoma", Font.BOLD, 11));
+		cashOut.setBounds(766, 138, 105, 23);
+		panel_1.add(cashOut);
+
+		cashOut.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				if (splitListener != null) {
+				if (cashOutListener != null) {
 
-					splitListener.onClick();
+					cashOutListener.onClick();
 				}
 
 			}
@@ -603,8 +632,55 @@ public class TablePanel extends JPanel {
 		printInfo();
 	}
 
+	public void printSplitCards() {
+		String adress;
+		for (int i = 0; i < client.splitCards.size(); i++) {
+			adress = "C:\\Users\\user\\Desktop\\BlackJack\\BlackJack\\Multiplayer Blackjack\\src\\Resources\\CardsImages\\"
+					+ client.splitCards.get(i).toString() + ".png";
+			switch (i) {
+			case 0:
+				splitCard1.setIcon(new ImageIcon(adress));
+				break;
+			case 1:
+				splitCard2.setIcon(new ImageIcon(adress));
+				break;
+			case 2:
+				splitCard3.setIcon(new ImageIcon(adress));
+				break;
+			case 3:
+				splitCard4.setIcon(new ImageIcon(adress));
+				break;
+			case 4:
+				splitCard5.setIcon(new ImageIcon(adress));
+				break;
+			case 5:
+				splitCard6.setIcon(new ImageIcon(adress));
+				break;
+			case 6:
+				splitCard7.setIcon(new ImageIcon(adress));
+				break;
+			case 7:
+				splitCard8.setIcon(new ImageIcon(adress));
+				break;
+			case 8:
+				splitCard9.setIcon(new ImageIcon(adress));
+				break;
+			case 9:
+				splitCard10.setIcon(new ImageIcon(adress));
+				break;
+			case 10:
+				splitCard11.setIcon(new ImageIcon(adress));
+				break;
+			default:
+				break;
+			}
+		}
+
+		printInfo();
+	}
+
 	public void printInfo() {
-		
+
 		nameLabel.setText(client.name);
 		lblNewLabel_1.setText("" + client.bet);
 		label.setText("" + client.money);
@@ -635,6 +711,12 @@ public class TablePanel extends JPanel {
 
 	}
 
+	public void setCashOutListener(ButtonListener listener) {
+
+		this.cashOutListener = listener;
+
+	}
+
 	public void over21() {
 
 		JOptionPane.showMessageDialog(this,
@@ -648,26 +730,20 @@ public class TablePanel extends JPanel {
 
 	}
 
-	// public void bePatient() {
-	//
-	// JOptionPane.showMessageDialog(this,
-	// "Your turn is finished. Please, be patient till the end of the round
-	// calculation.");
-	//
-	// }
 
 	public void printBeginningDealerCards() {
+
+		dealerCard1.setIcon(new ImageIcon(
+				"C:\\Users\\user\\Desktop\\BlackJack\\BlackJack\\Multiplayer Blackjack\\src\\Resources\\CardsImages\\"
+						+ client.dealer.cards.get(0).toString() + ".png"));
+		dealerCard2.setIcon(new ImageIcon(
+				"C:\\Users\\user\\Desktop\\BlackJack\\BlackJack\\Multiplayer Blackjack\\src\\Resources\\cardBack.png"));
+
 		
-		dealerCard1.setIcon(new ImageIcon("C:\\Users\\user\\Desktop\\BlackJack\\BlackJack\\Multiplayer Blackjack\\src\\Resources\\CardsImages\\"
-					+ client.dealer.cards.get(0).toString() + ".png"));
-		dealerCard2.setIcon(new ImageIcon("C:\\Users\\user\\Desktop\\BlackJack\\BlackJack\\Multiplayer Blackjack\\src\\Resources\\cardBack.png"));
-
-		//label_1.setText(client.dealer.cards.get(0).toString() + "secondDealerCard#");
-
 	}
 
 	public void printDealerCards() {
-		
+
 		String adress;
 		for (int i = 0; i < client.dealer.cards.size(); i++) {
 			adress = "C:\\Users\\user\\Desktop\\BlackJack\\BlackJack\\Multiplayer Blackjack\\src\\Resources\\CardsImages\\"
@@ -711,22 +787,13 @@ public class TablePanel extends JPanel {
 			}
 		}
 
-//		System.out.println("in print dealer cards");
-//		String toPrint = "";
-//		for (Card c : client.dealer.cards) {
-//			toPrint = toPrint + c.toString();
-//		}
-//
-//		label_1.setText(toPrint);
-//		System.out.println("dupa print dealer cards");
-
 	}
 
 	public void resetTable() {
 
 		lblNewLabel_1.setText("");
 		label.setText("" + client.money);
-		
+
 		card1.setIcon(null);
 		card2.setIcon(null);
 		card3.setIcon(null);
@@ -761,7 +828,7 @@ public class TablePanel extends JPanel {
 		splitCard9.setIcon(null);
 		splitCard10.setIcon(null);
 		splitCard11.setIcon(null);
-		
+
 		player1.setText("");
 		player1money.setText("");
 		player1bet.setText("");
@@ -777,6 +844,13 @@ public class TablePanel extends JPanel {
 		player5.setText("");
 		player5money.setText("");
 		player5bet.setText("");
+
+		NowPlay.setText("");
+		TheseCards.setText("");
+		AndNow.setText("");
+		TheseCards2.setText("");
+
+		client.playingSplitCards = false;
 
 	}
 
@@ -800,7 +874,7 @@ public class TablePanel extends JPanel {
 	public void blackJackWin() {
 
 		JOptionPane.showMessageDialog(this,
-				"The round is finished. You WON with that wonderful BlackJack! Your have " + client.money + "(USD).");
+				"The round is finished. You WON with that BlackJack! Your have " + client.money + "(USD).");
 		printInfo();
 
 	}
@@ -808,7 +882,7 @@ public class TablePanel extends JPanel {
 	public void loss() {
 
 		JOptionPane.showMessageDialog(this, "The round is finished. The dealer is better than you, with "
-				+ client.dealer.points + ". Good luck at the next round! Your have " + client.money + "(USD).");
+				+ client.dealer.points + ". Good luck at the next round! Your have " + client.money + "(USD) more.");
 		printInfo();
 
 	}
@@ -926,4 +1000,40 @@ public class TablePanel extends JPanel {
 		}
 
 	}
+
+	public void initialWaiting() {
+
+		JOptionPane.showMessageDialog(this,
+				"Please, be patient, you will enter at the table as soon as the current round is finished.");
+
+	}
+
+	public void splitGame() {
+
+		NowPlay.setText("");
+		TheseCards.setText("");
+		AndNow.setText("And now,");
+		TheseCards2.setText("these cards.");
+
+	}
+
+	public void over21BeforeSplitGame() {
+		JOptionPane.showMessageDialog(this,
+				"Sorry, you have over 21 points. Now, you will play the other set of cards.");
+
+	}
+
+	public void BlackJackBeforeSplitGame() {
+		JOptionPane.showMessageDialog(this, "Congratulations!! BLACKJACK!! Now, you will play the other set of cards.");
+
+	}
+
+	public void splitPotCalculation() {
+
+		JOptionPane.showMessageDialog(this,
+				"The round is finished. After split pot calculation, you have " + client.money + "(USD).");
+		printInfo();
+
+	}
+
 }

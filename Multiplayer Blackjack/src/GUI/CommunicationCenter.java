@@ -7,6 +7,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import GUI.ApplicationWindow.ButtonListener;
@@ -50,19 +52,34 @@ public class CommunicationCenter {
 					sc.useDelimiter("#");
 					String s = sc.next();
 					System.out.println(s);
+					if (s.equals("initialWaiting")) {
+						client.haveToWait = true;
+						continue;
+					}
+					if (s.equals("tooManyPlayers")) {
+						client.notAccepted = true;
+						continue;
+					}
 					if (s.equals("cards")) {
 						client.cards.clear();
 						int numberOfCards = sc.nextInt();
-						for (int i = 0; i<numberOfCards; i++) {
+						for (int i = 0; i < numberOfCards; i++) {
 							client.cards.add(new Card(sc.nextInt(), sc.next()));
 						}
 						aW.tablePanel.printCards();
 						continue;
+					} else if (s.equals("splitCards")) {
+						client.splitCards.clear();
+						int numberOfCards = sc.nextInt();
+						for (int i = 0; i < numberOfCards; i++) {
+							client.splitCards.add(new Card(sc.nextInt(), sc.next()));
+						}
+						aW.tablePanel.printSplitCards();
+						continue;
 					} else if (s.equals("players")) {
 						client.players.clear();
-						System.out.println(protocol);
 						int numberOfPlayers = sc.nextInt();
-						for (int i = 0; i<numberOfPlayers; i++) {
+						for (int i = 0; i < numberOfPlayers; i++) {
 							client.players.add(new Client(sc.next(), sc.nextInt(), sc.nextInt()));
 						}
 						aW.tablePanel.printPlayers();
@@ -73,7 +90,7 @@ public class CommunicationCenter {
 					} else if (s.equals("beginningDealerCards")) {
 						client.dealer.cards.clear();
 						int numberOfCards = sc.nextInt();
-						for (int i = 0; i<numberOfCards; i++) {
+						for (int i = 0; i < numberOfCards; i++) {
 							client.dealer.cards.add(new Card(sc.nextInt(), sc.next()));
 						}
 						aW.tablePanel.printBeginningDealerCards();
@@ -82,7 +99,7 @@ public class CommunicationCenter {
 						client.dealer.cards.clear();
 						client.dealer.points = sc.nextInt();
 						int numberOfCards = sc.nextInt();
-						for (int i = 0; i<numberOfCards; i++) {
+						for (int i = 0; i < numberOfCards; i++) {
 							client.dealer.cards.add(new Card(sc.nextInt(), sc.next()));
 						}
 						System.out.println("in ccccccccccccccccccccccc");
@@ -96,12 +113,34 @@ public class CommunicationCenter {
 							aW.tablePanel.split.setEnabled(true);
 						}
 					} else if (s.equals("over21")) {
-						client.bePatientflag = true;
-						aW.tablePanel.over21();
+
+						if ((client.splitCards.size() == 0) || (client.playingSplitCards)) {
+							client.bePatientflag = true;
+							aW.tablePanel.hit.setEnabled(false);
+							aW.tablePanel.stand.setEnabled(false);
+							aW.tablePanel.dble.setEnabled(false);
+							aW.tablePanel.over21();
+							client.playingSplitCards = false;
+						} else {
+							aW.tablePanel.over21BeforeSplitGame();
+							aW.tablePanel.splitGame();
+							splitGameHorn();
+						}
 						continue;
+
 					} else if (s.equals("BlackJack")) {
-						client.bePatientflag = true;
-						aW.tablePanel.BlackJack();
+						if ((client.splitCards.size() == 0) || (client.playingSplitCards)) {
+							client.bePatientflag = true;
+							aW.tablePanel.hit.setEnabled(false);
+							aW.tablePanel.stand.setEnabled(false);
+							aW.tablePanel.dble.setEnabled(false);
+							aW.tablePanel.BlackJack();
+							client.playingSplitCards = false;
+						} else {
+							aW.tablePanel.BlackJackBeforeSplitGame();
+							aW.tablePanel.splitGame();
+							splitGameHorn();
+						}
 						continue;
 					} else if (s.equals("over21Loss")) {
 						aW.newTable();
@@ -133,13 +172,21 @@ public class CommunicationCenter {
 						client.bet = 0;
 						aW.tablePanel.win();
 						continue;
+					} else if (s.equals("splitPotCalculation")) {
+						aW.newTable();
+						client.money = sc.nextInt();
+						client.bet = 0;
+						client.splitCards.clear();
+						aW.tablePanel.splitPotCalculation();
+						continue;
 					} else if (s.equals("wasOutside")) {
 						client.money = sc.nextInt();
 						client.bet = 0;
+						client.playingSplitCards = false;
 						aW.newTable();
 						continue;
 					}
-					
+
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -192,7 +239,10 @@ public class CommunicationCenter {
 							if (client.bet != 0) {
 								client.money -= client.bet;
 								out.writeUTF("newbet#" + client.name + "#" + client.money + "#" + client.bet);
-								
+								if (client.haveToWait) {
+									aW.tablePanel.initialWaiting();
+									client.haveToWait = false;
+								}
 							}
 
 						} catch (IOException e) {
@@ -218,11 +268,11 @@ public class CommunicationCenter {
 					public void run() {
 
 						try {
-//							if (client.playing != false) {
+							// if (client.playing != false) {
 
-								out.writeUTF("skip#" + client.name);
-								System.out.println("dupa ce trimit skkkkkkkkkkkkip");
-//							}
+							out.writeUTF("skip#" + client.name);
+							System.out.println("dupa ce trimit skkkkkkkkkkkkip");
+							// }
 
 						} catch (IOException e) {
 
@@ -237,66 +287,152 @@ public class CommunicationCenter {
 
 			}
 		});
-		
+
 		aW.setHitListener(new ButtonListener() {
 
 			@Override
 			public void onClick() {
-				
+
 				try {
 					out.writeUTF("hit#");
-					
 				} catch (IOException e) {
+
 					e.printStackTrace();
 				}
-				
-				aW.tablePanel.printCards();
-				
-				
 
+				if (client.playingSplitCards) {
+					
+					aW.tablePanel.printSplitCards();
+					
+				} else {
+
+					aW.tablePanel.printCards();
+				}
 			}
 		});
-		
+
 		aW.setStandListener(new ButtonListener() {
 
 			@Override
 			public void onClick() {
 				try {
 					out.writeUTF("stand#");
-					
+
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				
+
+				if (client.splitCards.size() == 0) {
+					aW.tablePanel.hit.setEnabled(false);
+					aW.tablePanel.stand.setEnabled(false);
+					aW.tablePanel.dble.setEnabled(false);
+				} else {
+					if (client.playingSplitCards) {
+						aW.tablePanel.hit.setEnabled(false);
+						aW.tablePanel.stand.setEnabled(false);
+						aW.tablePanel.dble.setEnabled(false);
+						client.playingSplitCards = false;
+					} else {
+						client.playingSplitCards = true;
+						aW.tablePanel.splitGame();
+						splitGameHorn();
+					}
+
+				}
 
 			}
 		});
-		
+
 		aW.setDbleListener(new ButtonListener() {
 
 			@Override
 			public void onClick() {
 				try {
 					out.writeUTF("dble#");
-					
+
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				
-				aW.tablePanel.printCards();
+
+				if (client.splitCards.size() == 0) {
+					
+					client.money -= client.bet;
+					client.bet *= 2;
+					aW.tablePanel.hit.setEnabled(false);
+					aW.tablePanel.stand.setEnabled(false);
+					aW.tablePanel.dble.setEnabled(false);
+					aW.tablePanel.printCards();
+					
+				} else {
+					
+					client.money -= client.bet / 2;
+					client.bet += client.bet / 2;
+					
+					if (client.playingSplitCards) {
+						aW.tablePanel.hit.setEnabled(false);
+						aW.tablePanel.stand.setEnabled(false);
+						aW.tablePanel.dble.setEnabled(false);
+						aW.tablePanel.printSplitCards();
+						client.playingSplitCards = false;
+					} else {
+						client.playingSplitCards = true;
+						aW.tablePanel.splitGame();
+						splitGameHorn();
+					}
+
+				}
 
 			}
 		});
-		
+
 		aW.setSplitListener(new ButtonListener() {
 
 			@Override
 			public void onClick() {
+				try {
+					out.writeUTF("split#");
+				} catch (IOException e) {
+
+					e.printStackTrace();
+				}
 				
+				aW.tablePanel.split.setEnabled(false);
+				aW.tablePanel.printSplitCards();
 
 			}
 		});
 
+		aW.setCashOutListener(new ButtonListener() {
+
+			@Override
+			public void onClick() {
+
+				try {
+					out.writeUTF("cashedOut#");
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				client.playing = false;
+				client.bet = 0;
+				aW.frmBlackjackMultiplayer.dispose();
+				JOptionPane.showMessageDialog(new JPanel(),
+						"Your cash went to your bank account. On the next time! Bye Bye!");
+
+			}
+		});
+
+	}
+
+	protected void splitGameHorn() {
+
+		try {
+			out.writeUTF("splitGameHorn#");
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
