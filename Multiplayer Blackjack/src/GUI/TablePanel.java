@@ -349,8 +349,7 @@ public class TablePanel extends JPanel {
 
 					standListener.onClick();
 				}
-				
-
+	
 			}
 
 		});
