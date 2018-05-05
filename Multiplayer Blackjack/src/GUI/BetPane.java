@@ -29,19 +29,6 @@ public class BetPane extends JDialog {
 	ButtonListener listener;
 	ButtonListener skipListener;
 
-	/**
-	 * Launch the application.
-	 *//*
-		 * public static void main(String[] args) { try { BetPane dialog = new
-		 * BetPane(); dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		 * dialog.setVisible(true); } catch (Exception e) { e.printStackTrace(); } }
-		 */
-
-	/**
-	 * Create the dialog.
-	 * 
-	 * @param client
-	 */
 	public BetPane(Client client) {
 
 		this.client = client;

@@ -1,6 +1,7 @@
 package Server;
 
 import java.io.DataInputStream;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -8,6 +9,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import Server.BlackJackTheBrain.UserListener;
+
+// THIS CLASS HAS TO BE RUN FOR STARTING THE SERVER
 
 public class Server {
 
@@ -36,6 +39,9 @@ public class Server {
 
 			@Override
 			public void run() {
+				
+				// WAITING AND RECEIVING THE CLIENTS
+				
 				while (true) {
 
 					try {

@@ -50,6 +50,9 @@ public class ApplicationWindow {
 	}
 
 	private void initialize() {
+		
+		// INITIALIZING THE FRAME AND THE GAME WINDOWS
+		
 		frmBlackjackMultiplayer = new JFrame();
 		frmBlackjackMultiplayer.setForeground(new Color(255, 255, 255));
 		frmBlackjackMultiplayer.setFont(null);

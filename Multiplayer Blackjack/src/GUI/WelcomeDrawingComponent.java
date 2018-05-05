@@ -20,13 +20,10 @@ public class WelcomeDrawingComponent extends JPanel{
 		try {
 			image = ImageIO.read(this.getClass().getResource("/Resources/sky.jpg"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
 		g.drawImage(image, 0, 0, this);
-		
-				
-
 	}
 }

@@ -102,11 +102,7 @@ public class TablePanel extends JPanel {
 	private JLabel AndNow;
 	private JLabel TheseCards2;
 
-	/**
-	 * Create the panel.
-	 * 
-	 * @param client
-	 */
+	
 	public TablePanel(Client client) {
 
 		this.client = client;
@@ -416,9 +412,6 @@ public class TablePanel extends JPanel {
 
 		card1 = new JLabel("");
 		card1.setBounds(198, 11, 55, 80);
-		// card1.setIcon(new ImageIcon(
-		// "C:\\Users\\user\\Desktop\\BlackJack\\BlackJack\\Multiplayer
-		// Blackjack\\src\\Resources\\CardsImages\\1#club#.png"));
 		panel_2.add(card1);
 
 		card2 = new JLabel("");

@@ -49,6 +49,8 @@ class User implements Runnable {
 
 	@Override
 	public void run() {
+		
+		// READING WHAT COMES FROM THE CLIENT
 
 		while (true) {
 			try {
@@ -265,6 +267,8 @@ class User implements Runnable {
 		}
 
 	}
+	
+	// WRITING TO THE CLIENT 
 
 	public void initialWaiting() {
 

@@ -43,8 +43,11 @@ public class CommunicationCenter {
 	private void readFromServer() {
 
 		new Thread(() -> {
+			
+			// READING FROM THE SERVER
 
 			while (true) {
+											
 				try {
 					String protocol = in.readUTF();
 					System.out.println(protocol);
@@ -195,6 +198,8 @@ public class CommunicationCenter {
 		}).start();
 
 	}
+	
+	// PROGRAMMING BUTTONS
 
 	public void initListeners() {
 
@@ -268,12 +273,8 @@ public class CommunicationCenter {
 					public void run() {
 
 						try {
-							// if (client.playing != false) {
-
 							out.writeUTF("skip#" + client.name);
-							System.out.println("dupa ce trimit skkkkkkkkkkkkip");
-							// }
-
+														
 						} catch (IOException e) {
 
 							e.printStackTrace();
